@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bottom_nav_text_color">#FF000000</color>
+    <color name="bottom_nav_icon_color">#FF000000</color>
+    
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<color name="backgroundColor">#FFF5F5F5</color>
+<color name="primaryColor">#6200EE</color>
+<color name="primaryTextColor">#FF000000</color>
 </resources>

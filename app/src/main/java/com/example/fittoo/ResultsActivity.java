@@ -1,21 +1,23 @@
 package com.example.fittoo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 public class ResultsActivity extends AppCompatActivity {
-    private TextView weightSummary, heightSummary, waistSummary;
+    private TextView headerTitle, weightSummary, heightSummary, waistSummary;
     private TextView whtrValue, whtrStatus;
     private TextView bmrValue, tdeeValue;
-    private ChipGroup goalChipGroup;
+    private TextView recommendationText;
     private ExtendedFloatingActionButton continueButton;
+    private View infoButton;
+    private RadioGroup goalRadioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +34,15 @@ public class ResultsActivity extends AppCompatActivity {
             displayMetabolicData(data);
         }
 
-        // Set up goal selection
-        setupGoalSelection();
-
         // Set up continue button
         setupContinueButton();
+
+        // Set up goal selection
+        setupGoalSelection();
     }
 
     private void initializeViews() {
+        headerTitle = findViewById(R.id.headerTitle);
         weightSummary = findViewById(R.id.weightSummary);
         heightSummary = findViewById(R.id.heightSummary);
         waistSummary = findViewById(R.id.waistSummary);
@@ -47,8 +50,10 @@ public class ResultsActivity extends AppCompatActivity {
         whtrStatus = findViewById(R.id.whtrStatus);
         bmrValue = findViewById(R.id.bmrValue);
         tdeeValue = findViewById(R.id.tdeeValue);
-        goalChipGroup = findViewById(R.id.goalChipGroup);
+        recommendationText = findViewById(R.id.recommendationText);
         continueButton = findViewById(R.id.continueButton);
+        infoButton = findViewById(R.id.infoButton);
+        goalRadioGroup = findViewById(R.id.goalRadioGroup);
     }
 
     private void displayUserData(Bundle data) {
@@ -83,25 +88,36 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     private void setupGoalSelection() {
-        goalChipGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            Chip chip = findViewById(checkedId);
-            if (chip != null) {
-                // Enable continue button when a goal is selected
-                continueButton.setEnabled(true);
-            }
+        goalRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            continueButton.setEnabled(checkedId != -1);
         });
+        
+        // Automatically select recommended goal
+        goalRadioGroup.check(R.id.weightLossRadio);
+        // Listener will be automatically triggered by check() call
     }
 
     private void setupContinueButton() {
-        continueButton.setEnabled(false); // Initially disabled until goal is selected
+        // Button state managed entirely by radio group selection listener
         continueButton.setOnClickListener(v -> {
-            int selectedChipId = goalChipGroup.getCheckedChipId();
-            if (selectedChipId != View.NO_ID) {
-                Chip selectedChip = findViewById(selectedChipId);
-                String selectedGoal = selectedChip.getText().toString();
-                // TODO: Handle the selected goal (e.g., save to SharedPreferences)
-                // For now, just finish the activity
-                finish();
+            int selectedId = goalRadioGroup.getCheckedRadioButtonId();
+            if (selectedId != -1) {
+                String selectedGoal;
+                if (selectedId == R.id.weightLossRadio) {
+                    selectedGoal = "Weight Loss";
+                } else if (selectedId == R.id.muscleGainRadio) {
+                    selectedGoal = "Muscle Gain";
+                } else if (selectedId == R.id.recompRadio) {
+                    selectedGoal = "Body Recomposition";
+                } else {
+                    selectedGoal = "General Fitness";
+                }
+
+                // Start WorkoutPlanActivity with the selected goal
+                Intent intent = new Intent(this, DashboardActivity.class);
+                intent.putExtra("selected_goal", selectedGoal);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
