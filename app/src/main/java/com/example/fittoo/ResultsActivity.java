@@ -22,23 +22,25 @@ public class ResultsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Remove title bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_results);
 
         // Initialize views
         initializeViews();
-        
+
         // Get data from intent
         Bundle data = getIntent().getExtras();
         if (data != null) {
             displayUserData(data);
             displayMetabolicData(data);
+            setupGoalSelection(data); // Pass user data for dynamic goal selection
         }
 
         // Set up continue button
         setupContinueButton();
-
-        // Set up goal selection
-        setupGoalSelection();
     }
 
     private void initializeViews() {
@@ -68,7 +70,7 @@ public class ResultsActivity extends AppCompatActivity {
         // Calculate and display WHtR
         double whtr = waist / height;
         whtrValue.setText(String.format("%.2f", whtr));
-        
+
         // Set WHtR status and color
         if (whtr > 0.5) {
             whtrStatus.setText("High Risk");
@@ -87,18 +89,39 @@ public class ResultsActivity extends AppCompatActivity {
         tdeeValue.setText(String.format("TDEE: %.0f calories/day", tdee));
     }
 
-    private void setupGoalSelection() {
+    private void setupGoalSelection(Bundle data) {
+        if (data == null) return;
+
+        double whtr = data.getDouble("whtr");
+        double bmr = data.getDouble("bmr");
+        double tdee = data.getDouble("tdee");
+
+        int recommendedGoalId;
+
+        if (whtr > 0.5) {
+            // If WHtR is high, recommend Weight Loss
+            recommendedGoalId = R.id.weightLossRadio;
+            recommendationText.setText("Recommended: Weight Loss");
+        } else if (bmr > 1800 && tdee > 2500) {
+            // If BMR and TDEE suggest a high metabolism, recommend Muscle Gain
+            recommendedGoalId = R.id.muscleGainRadio;
+            recommendationText.setText("Recommended: Muscle Gain");
+        } else {
+            // Default to Body Recomposition
+            recommendedGoalId = R.id.recompRadio;
+            recommendationText.setText("Recommended: Body Recomposition");
+        }
+
+        // Set the recommended goal dynamically
+        goalRadioGroup.check(recommendedGoalId);
+
+        // Enable continue button only if a goal is selected
         goalRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             continueButton.setEnabled(checkedId != -1);
         });
-        
-        // Automatically select recommended goal
-        goalRadioGroup.check(R.id.weightLossRadio);
-        // Listener will be automatically triggered by check() call
     }
 
     private void setupContinueButton() {
-        // Button state managed entirely by radio group selection listener
         continueButton.setOnClickListener(v -> {
             int selectedId = goalRadioGroup.getCheckedRadioButtonId();
             if (selectedId != -1) {
@@ -113,7 +136,7 @@ public class ResultsActivity extends AppCompatActivity {
                     selectedGoal = "General Fitness";
                 }
 
-                // Start WorkoutPlanActivity with the selected goal
+                // Start DashboardActivity with the selected goal
                 Intent intent = new Intent(this, DashboardActivity.class);
                 intent.putExtra("selected_goal", selectedGoal);
                 startActivity(intent);

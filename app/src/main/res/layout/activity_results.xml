@@ -186,7 +186,7 @@
                             android:id="@+id/weightLossRadio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Weight Loss (Recommended)"
+                            android:text="Weight Loss "
                             android:padding="8dp"
                             android:textStyle="bold"
                             android:textColor="?attr/colorPrimary"
