@@ -5,81 +5,74 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <!-- Main Content Container -->
-    <LinearLayout
+    <HorizontalScrollView
+            android:id="@+id/filter_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/filter_chip_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:checked="true"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_hiit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HIIT"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_steady_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Steady State"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_beginner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beginner Level"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_advanced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Advanced Level"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginBottom="56dp">
+        android:layout_marginBottom="56dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-        <!-- Goal Title -->
-        <TextView
-            android:id="@+id/goal_title"
-            android:layout_width="match_parent"
+        
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:text="Your Fitness Journey 🚀"
-            android:gravity="center"
-            android:textColor="@color/primaryTextColor"
-            android:padding="8dp" />
-
-        <!-- Fragment Container for switching between sections -->
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!-- Horizontal Image Buttons in Card Views -->
-        <LinearLayout
-            android:id="@+id/button_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="80dp">
-
-            <!-- Workout Plans Card -->
-
-            <!-- Diet Plans Card -->
-            <TextView
-                android:id="@+id/btn_workouts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Workouts"
-                style="@style/TextButtonStyle"/>
-
-            <TextView
-                android:id="@+id/btn_diet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Diet"
-                style="@style/TextButtonStyle"/>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Floating Action Button -->
-    <!-- Bottom Navigation -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_add"
-        app:tint="@color/white"
-        app:backgroundTint="@color/primaryColor"/>
+            android:layout_gravity="bottom|end"
+            android:layout_margin="90dp"
+            app:backgroundTint="@color/primaryColor"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@color/white" />
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

@@ -9,4 +9,5 @@
 <color name="backgroundColor">#FFF5F5F5</color>
 <color name="primaryColor">#6200EE</color>
 <color name="primaryTextColor">#FF000000</color>
+<color name="secondaryTextColor">#99000000</color>
 </resources>

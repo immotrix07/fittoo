@@ -1,5 +1,7 @@
 package com.example.fittoo;
 
+import android.widget.HorizontalScrollView;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 public class DashboardActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
-    private FloatingActionButton fabAddProgress;
+
+    private ChipGroup filterChipGroup;
+    private WorkoutAdapter workoutAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,7 +28,9 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         bottomNav = findViewById(R.id.bottom_navigation);
-        fabAddProgress = findViewById(R.id.fab_add_progress);
+        filterChipGroup = findViewById(R.id.filter_chip_group);
+
+        setupChipGroupListeners();
 
         loadFragment(new WorkoutsFragment());
 
@@ -42,9 +49,6 @@ public class DashboardActivity extends AppCompatActivity {
             return loadFragment(selectedFragment);
         });
 
-        fabAddProgress.setOnClickListener(view -> {
-            // Handle progress update creation
-        });
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -52,6 +56,14 @@ public class DashboardActivity extends AppCompatActivity {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
+
+            // Show filter bar only for WorkoutsFragment
+            HorizontalScrollView filterScrollView = findViewById(R.id.filter_scroll_view);
+            if (fragment instanceof WorkoutsFragment) {
+                filterScrollView.setVisibility(View.VISIBLE);
+            } else {
+                filterScrollView.setVisibility(View.GONE);
+            }
             return true;
         }
         return false;
@@ -61,30 +73,48 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         SharedPreferences sharedPreferences = getSharedPreferences("GOAL_PREFS", MODE_PRIVATE);
-        TextView goalTitle = findViewById(R.id.goal_title);
-
         String selectedGoal = sharedPreferences.getString("SELECTED_GOAL", "Weight Loss");
         updateUIForGoal(selectedGoal);
     }
 
     private void updateUIForGoal(String goal) {
-        TextView goalTitle = findViewById(R.id.goal_title);
-        goalTitle.setText(goal + " Dashboard");
-        TextView btnWorkouts = findViewById(R.id.btn_workouts);
-        TextView btnDiet = findViewById(R.id.btn_diet);
-
+        // Update the UI based on selected goal without using TextViews
         switch (goal) {
             case "Muscle Gain":
-                btnWorkouts.setText("Strength Training");
-                btnDiet.setText("High Protein Diet");
+                // Update UI elements for Muscle Gain goal
                 break;
             case "Weight Loss":
-                btnWorkouts.setText("Cardio Plans");
-                btnDiet.setText("Calorie Deficit");
+                // Update UI elements for Weight Loss goal
                 break;
             default:
-                btnWorkouts.setText("Workout Plans");
-                btnDiet.setText("Diet Recommendations");
+                // Default UI updates
         }
+    }
+
+    private void setupChipGroupListeners() {
+        Chip chipAll = findViewById(R.id.chip_all);
+        Chip chipHiit = findViewById(R.id.chip_hiit);
+        Chip chipSteadyState = findViewById(R.id.chip_steady_state);
+        Chip chipBeginner = findViewById(R.id.chip_beginner);
+        Chip chipAdvanced = findViewById(R.id.chip_advanced);
+
+        filterChipGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            String category = "All";
+            String difficultyLevel = "";
+
+            if (checkedId == R.id.chip_hiit) {
+                category = "HIIT";
+            } else if (checkedId == R.id.chip_steady_state) {
+                category = "Steady State";
+            } else if (checkedId == R.id.chip_beginner) {
+                difficultyLevel = "Beginner";
+            } else if (checkedId == R.id.chip_advanced) {
+                difficultyLevel = "Advanced";
+            }
+
+            if (workoutAdapter != null) {
+                workoutAdapter.filter(category, difficultyLevel);
+            }
+        });
     }
 }
