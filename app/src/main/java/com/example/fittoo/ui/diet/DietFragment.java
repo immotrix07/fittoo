@@ -1,4 +1,4 @@
-package com.example.fittoo;
+package com.example.fittoo.ui.diet;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.fittoo.R;
+import com.example.fittoo.RecipeDetailActivity;
+import com.example.fittoo.adapters.DietCategoryAdapter;
 import com.example.fittoo.adapters.MealPlanAdapter;
+import com.example.fittoo.models.DietCategory;
 import com.example.fittoo.models.MealPlan;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.fittoo.data.MealData;
+import java.util.Arrays;
 import androidx.appcompat.widget.SearchView;
 
 public class DietFragment extends Fragment {
@@ -56,9 +62,24 @@ public class DietFragment extends Fragment {
     }
 
     private void setupSearch() {
+        // Configure SearchView
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Search meals...");
         searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setClickable(true);
+        searchView.setFocusable(true);
+
+        // Make the entire search area clickable
+        View searchPlate = searchView.findViewById(androidx.appcompat.R.id.search_plate);
+        if (searchPlate != null) {
+            searchPlate.setBackground(null);
+        }
+
+        // Set up the search icon click behavior
+        View searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_button);
+        if (searchIcon != null) {
+            searchIcon.setOnClickListener(v -> searchView.setIconified(false));
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -73,6 +94,28 @@ public class DietFragment extends Fragment {
                 return true;
             }
         });
+
+        // Set up SearchView collapse listener
+        searchView.setOnCloseListener(() -> {
+            filterMeals("");
+            return false;
+        });
+
+        // Make the entire search view clickable and expand on click
+        searchView.setOnSearchClickListener(v -> {
+            // Additional setup when search is opened if needed
+        });
+
+        // Set up SearchView collapse listener
+        searchView.setOnCloseListener(() -> {
+            filterMeals("");
+            return false;
+        });
+
+        // Make the entire search view clickable and expand on click
+        searchView.setOnSearchClickListener(v -> {
+            // Additional setup when search is opened if needed
+        });
     }
 
     private void filterMeals(String query) {
@@ -81,14 +124,23 @@ public class DietFragment extends Fragment {
         }
     }
 
+    private void onCategorySelected(DietCategory category) {
+        // Update meals based on category
+        mealAdapter.filterByCategory(category.getName());
+    }
+
     private void onMealClicked(MealPlan meal) {
         Intent intent = new Intent(requireContext(), RecipeDetailActivity.class);
         intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_NAME, meal.getName());
         intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_CALORIES, meal.getCalories());
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_INGREDIENTS, String.join(", ", meal.getIngredients()));
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_INSTRUCTIONS, String.join("\n", meal.getInstructions()));
+        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_INGREDIENTS, meal.getIngredients() != null ? String.join(", ", meal.getIngredients()) : "");
+        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_INSTRUCTIONS, meal.getInstructions() != null ? String.join("\n", meal.getInstructions()) : "");
         intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_IMAGE_RES_ID, meal.getImageResourceId());
         intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_DIET_TYPE, meal.getDietType());
         startActivity(intent);
     }
+
+
+
+    
 }

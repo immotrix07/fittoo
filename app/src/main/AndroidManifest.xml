@@ -18,12 +18,17 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+    <service
+        android:name=".WorkoutTimerService"
+        android:exported="false" />
+
             <activity
             android:name=".WorkoutPlanActivity"
             android:exported="false" />
@@ -31,6 +36,10 @@
     <activity
             android:name=".DashboardActivity"
             android:exported="false" />
-    </application>
+    <activity
+            android:name=".RecipeDetailActivity"
+            android:exported="false" />
+    <activity android:name=".ActiveWorkoutActivity" android:exported="false"/>
+</application>
 
 </manifest>

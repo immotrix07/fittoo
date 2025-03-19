@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_workouts"
-        android:icon="@drawable/ic_workouts"
+        android:icon="@drawable/ic_workout_logo"
         android:title="Workouts"/>
     <item
         android:id="@+id/nav_diet"
@@ -10,7 +10,7 @@
         android:title="Diet"/>
     <item
         android:id="@+id/nav_progress"
-        android:icon="@drawable/ic_progress"
+        android:icon="@drawable/ic_progress_logo"
         android:title="Progress"/>
     <item
         android:id="@+id/nav_reminders"

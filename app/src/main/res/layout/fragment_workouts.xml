@@ -108,6 +108,16 @@
             android:scrollbars="vertical"
             android:scrollbarThumbVertical="@android:color/darker_gray" />
 
+        <Button
+            android:id="@+id/start_workout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Start Workout"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            app:iconTint="@color/white"
+            android:backgroundTint="@color/primaryColor"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
