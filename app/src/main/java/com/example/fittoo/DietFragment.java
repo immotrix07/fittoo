@@ -19,7 +19,7 @@ public class DietFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diet, container, false);
         
-        dietRecycler = view.findViewById(R.id.diet_recycler);
+        dietRecycler = view.findViewById(R.id.rv_meals);
         dietRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         
         // TODO: Set up RecyclerView adapter
