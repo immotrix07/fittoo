@@ -12,6 +12,9 @@ import com.example.fittoo.models.MealPlan;
 import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.res.Resources;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,13 +83,20 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
             clickListener.onMealClick(meal)
         );
         
-        // Set meal image
-        if (meal.getImageResourceId() != 0) {
-            holder.ivMeal.setImageResource(meal.getImageResourceId());
-            holder.ivMeal.setVisibility(View.VISIBLE);
+        // Load meal image using Glide for efficient loading and caching
+        int imageResourceId = meal.getImageResourceId();
+        if (imageResourceId != 0) {
+            Glide.with(holder.itemView.getContext())
+                .load(imageResourceId)
+                .apply(new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.meal_placeholder)
+                    .error(R.drawable.meal_placeholder))
+                .into(holder.ivMeal);
         } else {
-            holder.ivMeal.setVisibility(View.GONE);
+            holder.ivMeal.setImageResource(R.drawable.meal_placeholder);
         }
+        holder.ivMeal.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -149,6 +159,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
         meals = filtered;
         notifyDataSetChanged();
     }
+
+
 
 
 

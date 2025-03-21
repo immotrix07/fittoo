@@ -30,9 +30,18 @@ public class DashboardActivity extends AppCompatActivity {
         bottomNav = findViewById(R.id.bottom_navigation);
         filterChipGroup = findViewById(R.id.filter_chip_group);
 
+        // Optimize bottom navigation animations and transitions
+        bottomNav.setLabelVisibilityMode(BottomNavigationView.LABEL_VISIBILITY_LABELED);
+        bottomNav.setOnItemReselectedListener(item -> {
+            // Prevent fragment recreation on reselection
+        });
+
         setupChipGroupListeners();
 
-        loadFragment(new WorkoutsFragment());
+        // Load initial fragment
+        if (savedInstanceState == null) {
+            loadFragment(new WorkoutsFragment());
+        }
 
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
@@ -48,13 +57,17 @@ public class DashboardActivity extends AppCompatActivity {
             }
             return loadFragment(selectedFragment);
         });
-
     }
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(
+                R.anim.fade_in,
+                R.anim.fade_out
+            );
             transaction.replace(R.id.fragment_container, fragment);
+            transaction.setReorderingAllowed(true);
             transaction.commit();
 
             // Show filter bar only for WorkoutsFragment

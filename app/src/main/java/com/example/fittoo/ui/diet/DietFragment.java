@@ -1,5 +1,7 @@
 package com.example.fittoo.ui.diet;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -46,8 +48,13 @@ public class DietFragment extends Fragment {
 
     private void setupMeals() {
         rvMeals.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        mealAdapter = new MealPlanAdapter(MealData.getSampleMeals(), this::onMealClicked);
-        rvMeals.setAdapter(mealAdapter);
+        // Initialize ViewModel
+DietViewModel viewModel = new ViewModelProvider(this).get(DietViewModel.class);
+viewModel.getMealPlans().observe(getViewLifecycleOwner(), meals -> {
+    mealAdapter = new MealPlanAdapter(meals, this::onMealClicked);
+    
+});
+        
     }
 
     private void setupFilters() {
