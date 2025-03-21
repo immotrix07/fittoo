@@ -3,7 +3,10 @@ package com.example.fittoo.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.ImageView;
+=======
+>>>>>>> origin/master
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,15 +15,21 @@ import com.example.fittoo.models.MealPlan;
 import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import android.content.res.Resources;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+=======
+>>>>>>> origin/master
 
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvMealName, tvCalories, tvIngredients, tvDietType;
         MaterialButton btnDetails;
+<<<<<<< HEAD
         ImageView ivMeal;
+=======
+>>>>>>> origin/master
 
         public ViewHolder(View view) {
             super(view);
@@ -29,7 +38,10 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
             tvIngredients = view.findViewById(R.id.tv_ingredients);
             tvDietType = view.findViewById(R.id.tv_meal_type);
             btnDetails = view.findViewById(R.id.btn_details);
+<<<<<<< HEAD
             ivMeal = view.findViewById(R.id.iv_meal);
+=======
+>>>>>>> origin/master
         }
     }
     public List<MealPlan> getAllMeals() {
@@ -82,6 +94,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
         holder.btnDetails.setOnClickListener(v -> 
             clickListener.onMealClick(meal)
         );
+<<<<<<< HEAD
         
         // Load meal image using Glide for efficient loading and caching
         int imageResourceId = meal.getImageResourceId();
@@ -97,6 +110,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
             holder.ivMeal.setImageResource(R.drawable.meal_placeholder);
         }
         holder.ivMeal.setVisibility(View.VISIBLE);
+=======
+>>>>>>> origin/master
     }
 
     @Override
@@ -110,6 +125,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
         } else {
             List<MealPlan> filtered = new ArrayList<>();
             for (MealPlan meal : allMeals) {
+<<<<<<< HEAD
                 String[] mealDietTypes = meal.getDietType().toLowerCase().trim().split(",\\s*");
                 boolean matchesFilter = false;
                 for (String filter : filters) {
@@ -125,6 +141,14 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
                 if (matchesFilter) {
                     filtered.add(meal);
                 }
+=======
+                for (String filter : filters) {
+                    if (meal.getDietType().equalsIgnoreCase(filter)) {
+                        filtered.add(meal);
+                        break;
+                    }
+                }
+>>>>>>> origin/master
             }
             meals = filtered;
         }
@@ -162,8 +186,11 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
 
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
     public interface MealClickListener {
         void onMealClick(MealPlan meal);
     }

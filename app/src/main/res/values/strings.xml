@@ -2,5 +2,8 @@
     <string name="app_name">fittoo</string>
 <string name="category_image">Category Image</string>
 <string name="meal_image">Meal Image</string>
+<<<<<<< HEAD
 <string name="meal_image_description">Detailed image of the meal recipe</string>
+=======
+>>>>>>> origin/master
 </resources>

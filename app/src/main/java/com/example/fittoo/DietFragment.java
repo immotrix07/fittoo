@@ -27,9 +27,14 @@ public class DietFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diet, container, false);
         
+<<<<<<< HEAD
         rvMeals = view.findViewById(R.id.rv_meals);
         filterChipGroup = view.findViewById(R.id.filter_chip_group);
         searchView = view.findViewById(R.id.searchView);
+=======
+        dietRecycler = view.findViewById(R.id.rv_meals);
+        dietRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+>>>>>>> origin/master
         
         setupMeals();
         setupFilters();

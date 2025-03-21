@@ -1,7 +1,10 @@
 package com.example.fittoo;
 
+<<<<<<< HEAD
 import com.example.fittoo.ActiveWorkoutActivity;
 
+=======
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+<<<<<<< HEAD
 import android.widget.Button;
 import android.content.Intent;
+=======
+>>>>>>> origin/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +37,15 @@ public class WorkoutFragment extends Fragment implements WorkoutAdapter.OnWorkou
         // Load workout data
         loadWorkoutData();
 
+<<<<<<< HEAD
         Button startButton = view.findViewById(R.id.start_workout_btn);
         startButton.setOnClickListener(v -> {
             // Start workout functionality
             startWorkoutSession();
         });
 
+=======
+>>>>>>> origin/master
         return view;
     }
 
@@ -55,6 +64,7 @@ public class WorkoutFragment extends Fragment implements WorkoutAdapter.OnWorkou
         // Handle workout click
     }
 
+<<<<<<< HEAD
     private void startWorkoutSession() {
         // Start workout timer service
         Intent serviceIntent = new Intent(getActivity(), WorkoutTimerService.class);
@@ -68,5 +78,10 @@ public class WorkoutFragment extends Fragment implements WorkoutAdapter.OnWorkou
     @Override
     public void onStartWorkoutClick(Workout workout) {
         startWorkoutSession();
+=======
+    @Override
+    public void onStartWorkoutClick(Workout workout) {
+        // Handle start workout click
+>>>>>>> origin/master
     }
 }

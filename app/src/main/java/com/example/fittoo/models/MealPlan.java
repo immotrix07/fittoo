@@ -50,10 +50,13 @@ public class MealPlan {
         this.description = description;
     }
 
+<<<<<<< HEAD
     public int getImageResourceId() {
         return imageResource;
     }
 
+=======
+>>>>>>> origin/master
     public int getImageResource() {
         return imageResource;
     }

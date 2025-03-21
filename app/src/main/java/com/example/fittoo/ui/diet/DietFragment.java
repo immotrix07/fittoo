@@ -1,8 +1,5 @@
 package com.example.fittoo.ui.diet;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.fittoo.R;
-import com.example.fittoo.RecipeDetailActivity;
 import com.example.fittoo.adapters.DietCategoryAdapter;
 import com.example.fittoo.adapters.MealPlanAdapter;
 import com.example.fittoo.models.DietCategory;
@@ -48,13 +44,6 @@ public class DietFragment extends Fragment {
 
     private void setupMeals() {
         rvMeals.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        // Initialize ViewModel
-DietViewModel viewModel = new ViewModelProvider(this).get(DietViewModel.class);
-viewModel.getMealPlans().observe(getViewLifecycleOwner(), meals -> {
-    mealAdapter = new MealPlanAdapter(meals, this::onMealClicked);
-    
-});
-        
     }
 
     private void setupFilters() {
@@ -137,14 +126,6 @@ viewModel.getMealPlans().observe(getViewLifecycleOwner(), meals -> {
     }
 
     private void onMealClicked(MealPlan meal) {
-        Intent intent = new Intent(requireContext(), RecipeDetailActivity.class);
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_NAME, meal.getName());
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_CALORIES, meal.getCalories());
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_INGREDIENTS, meal.getIngredients() != null ? String.join(", ", meal.getIngredients()) : "");
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_INSTRUCTIONS, meal.getInstructions() != null ? String.join("\n", meal.getInstructions()) : "");
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_IMAGE_RES_ID, meal.getImageResourceId());
-        intent.putExtra(RecipeDetailActivity.EXTRA_MEAL_DIET_TYPE, meal.getDietType());
-        startActivity(intent);
     }
 
 
