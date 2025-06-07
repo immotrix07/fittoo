@@ -53,7 +53,32 @@ Fittoo is an all-in-one Android app built to help users take control of their fi
 --------------------------------------------------------
 
 📸 Screenshots & Demo
- https://rb.gy/wd0la1
+ ### 🥗 Custom Meal Screen
+![Custom Meal](assets/screens/custome_meal_screem.jpg)
+
+### 💪 Workout Screen
+![Workout](assets/screens/workout_screen.jpg)
+
+### 📊 Report Screen
+![Report](assets/screens/report_screen.jpg)
+
+### 🔐 Login Screen
+![Login](assets/screens/login_screen.jpg)
+
+### 💧 Water Reminder Screen
+![Water Reminder](assets/screens/water_reminder_screen.jpg)
+
+### 🏁 Workout Result Screen
+![Workout Result](assets/screens/workout_result_screen.jpg)
+
+### 👤 Profile Screen
+![Profile](assets/screens/profile_screen.jpg)
+
+### 👣 Step Counter Screen
+![Step Counter](assets/screens/stepcounter_screen.jpg)
+
+### 🍱 Meal Screen
+![Meal](assets/screens/MEAL_SCREEN.jpg)
 
 --------------------------------------------------------
 
